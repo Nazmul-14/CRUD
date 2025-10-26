@@ -15,4 +15,43 @@ class Productcontroler{
       Products =model.data ?? [];
     }
   }
+
+  Future<bool> creatproduct(String name,String img,int qty,int unitprice,int totalprice)async{
+    final response=await http.post(Uri.parse(Urls.creatproduct),
+        headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(
+          {
+            "ProductName": name,
+            "ProductCode": DateTime.now().microsecondsSinceEpoch,
+            "Img": img,
+            "Qty": qty,
+            "UnitPrice": unitprice,
+            "TotalPrice": totalprice
+
+          }
+      )
+    );
+
+    print(response.statusCode);
+    print(response.body);
+    if(response.statusCode == 200){
+      await fetchproduct();
+      return true;
+    }
+    else{
+      return false;
+    }
+
+  }
+
+  Future<bool> Deletproduct(String productid) async {
+    final response = await http.get(Uri.parse(Urls.deletproduct(productid)));
+
+    if(response.statusCode == 200){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
 }

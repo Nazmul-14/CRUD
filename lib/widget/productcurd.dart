@@ -4,9 +4,11 @@ import '../model/productmodel.dart';
 
 class Productcrud extends StatelessWidget {
   final Data product;
+  final VoidCallback onDelete;
   const Productcrud({
     super.key,
     required this.product,
+    required this.onDelete,
   });
 
   @override
@@ -23,9 +25,10 @@ class Productcrud extends StatelessWidget {
                 height: 150,
                 child: Image.network(
                   (product.img != null &&
+                      product.img.toString().isNotEmpty &&
                       product.img.toString().startsWith('http'))
                       ? product.img.toString()
-                      : 'https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-6.png',
+                      : 'https://media.istockphoto.com/id/1956667539/vector/stop-sign-symbol-icon.jpg?s=612x612&w=0&k=20&c=enyDi5bXWraO1ShOD-ZssxhJmmpxaM5VM6xvKtFVGkg=',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -55,7 +58,7 @@ class Productcrud extends StatelessWidget {
                   icon: const Icon(Icons.edit, color: Colors.orange),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: onDelete,
                   icon: const Icon(Icons.delete, color: Colors.red),
                 ),
               ],
